@@ -31,6 +31,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form2));
             this.AddObj = new System.Windows.Forms.Button();
             this.back = new System.Windows.Forms.Button();
+            this.remove = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // AddObj
@@ -59,6 +60,19 @@
             this.back.UseVisualStyleBackColor = false;
             this.back.Click += new System.EventHandler(this.back_Click);
             // 
+            // remove
+            // 
+            this.remove.BackColor = System.Drawing.Color.BlanchedAlmond;
+            this.remove.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.remove.Font = new System.Drawing.Font("Sitka Subheading", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.remove.Location = new System.Drawing.Point(511, 602);
+            this.remove.Name = "remove";
+            this.remove.Size = new System.Drawing.Size(313, 47);
+            this.remove.TabIndex = 2;
+            this.remove.Text = "Удалить объект";
+            this.remove.UseVisualStyleBackColor = false;
+            this.remove.Click += new System.EventHandler(this.remove_Click);
+            // 
             // Form2
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -66,6 +80,7 @@
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(1184, 661);
+            this.Controls.Add(this.remove);
             this.Controls.Add(this.back);
             this.Controls.Add(this.AddObj);
             this.Name = "Form2";
@@ -78,5 +93,6 @@
 
         private System.Windows.Forms.Button AddObj;
         private System.Windows.Forms.Button back;
+        private System.Windows.Forms.Button remove;
     }
 }

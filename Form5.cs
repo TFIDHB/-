@@ -2,6 +2,7 @@
 using System;
 using System.Drawing;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace Модель_леса
 {
@@ -10,12 +11,13 @@ namespace Модель_леса
     {
         private List<PictureBox> pictureBoxes = new List<PictureBox>();
         private List<Point> pictureBoxLocations = new List<Point>();
+        private Label amountLabel;
 
         private int callingFormId;
         private Form1 form1Instance;
 
-        private static Dictionary<int, List<PictureBox>> cachedPictureBoxes = new Dictionary<int, List<PictureBox>>();
-        private static Dictionary<int, List<Point>> cachedLocations = new Dictionary<int, List<Point>>();
+        public static Dictionary<int, List<PictureBox>> cachedPictureBoxes = new Dictionary<int, List<PictureBox>>();
+        public static Dictionary<int, List<Point>> cachedLocations = new Dictionary<int, List<Point>>();
 
         public Form5(int formId, Form1 form1)
         {
@@ -32,11 +34,15 @@ namespace Модель_леса
             pictureBoxes = cachedPictureBoxes[formId];
             pictureBoxLocations = cachedLocations[formId];
         }
-
         private void numericUpDown1_ValueChanged(object sender, EventArgs e)
         {
 
+            if (amountLabel != null)
+            {
+                amountLabel.Text = numericUpDown1.Value.ToString();
+            }
         }
+
 
         private void Type_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -76,6 +82,13 @@ namespace Модель_леса
                 BackColor = Color.Transparent
             };
 
+            Label amountLabel = new Label
+            {
+                Text = numericUpDown1.Value.ToString(),
+                AutoSize = true,
+                BackColor = Color.Yellow
+            };
+
             Form formToOpen = null;
 
             switch (callingFormId)
@@ -99,10 +112,13 @@ namespace Модель_леса
                     pictureBoxes.Add(animalPictureBox);
                     pictureBoxLocations.Add(args.Location);
 
+                    amountLabel.Location = new Point(args.Location.X, args.Location.Y + animalPictureBox.Height + 5);
+
                     cachedPictureBoxes[callingFormId] = pictureBoxes;
                     cachedLocations[callingFormId] = pictureBoxLocations;
 
                     formToOpen.Controls.Add(animalPictureBox);
+                    formToOpen.Controls.Add(amountLabel);
                 };
 
                 for (int i = 0; i < pictureBoxes.Count; i++)
@@ -116,5 +132,35 @@ namespace Модель_леса
                 formToOpen.Show();
             }
         }
+
+        private void objBehavior_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (Spec.SelectedItem != null && objBehavior.SelectedItem != null)
+            {
+                string selectedSpecies = Spec.SelectedItem.ToString();
+                string selectedBehavior = objBehavior.SelectedItem.ToString();
+
+                World worldObject = null;
+
+                if (Type.SelectedItem.ToString() == "Хищник")
+                {
+                    worldObject = new Predators(selectedSpecies, (int)numericUpDown1.Value, selectedBehavior);
+                }
+                else if (Type.SelectedItem.ToString() == "Травоядное")
+                {
+                    worldObject = new Herbivores(selectedSpecies, (int)numericUpDown1.Value, selectedBehavior);
+                }
+                else if (Type.SelectedItem.ToString() == "Растение")
+                {
+                    worldObject = new Plants(selectedSpecies, (int)numericUpDown1.Value, selectedBehavior);
+                }
+                else if (Type.SelectedItem.ToString() == "Насекомое")
+                {
+                    worldObject = new Insects(selectedSpecies, (int)numericUpDown1.Value, selectedBehavior);
+                }
+
+            }
+        }
+
     }
 }

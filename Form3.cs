@@ -21,8 +21,17 @@ namespace Модель_леса
 
         private void back_Click(object sender, EventArgs e)
         {
-            this.Close();
-            Form_1.Show();
+            World.Back(this, Form_1);
+        }
+
+        private void AddObj_Click(object sender, EventArgs e)
+        {
+            World.Add(this, Form_1);
+        }
+
+        private void remove_Click(object sender, EventArgs e)
+        {
+            //World.Remove(this, pictureBoxes, pictureBoxLocations, callingFormId, instruction, otherButtons);
         }
     }
 }
